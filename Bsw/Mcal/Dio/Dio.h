@@ -34,7 +34,7 @@ typedef uint16 Dio_PortLevelType; //stm보드 포트 1개 > 핀 16개
 #define DIO_E_PARAM_INVALID_CHANNEL_ID 0x0A
 
 Dio_LevelType Dio_ReadChannel(Dio_ChannelType);
-void Dio_WriteChannel(Dio_LevelType, Dio_ChannelType);
+void Dio_WriteChannel(Dio_ChannelType, Dio_LevelType);
 Dio_LevelType Dio_FlipChannel(Dio_ChannelType);
 
 #endif /* DIO_H */
