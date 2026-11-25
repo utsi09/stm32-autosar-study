@@ -11,3 +11,16 @@
  *  - 채널 ID 순서대로 채운 const 배열
  *      LED_GREEN = PB0, LED_BLUE = PB7, LED_RED = PB14, USER_BTN = PC13
  */
+
+#include "Dio.h"
+
+const Dio_ChannelConfigType Dio_ChannelConfig[DIO_CHANNEL_COUNT] = {
+    {STEP_IN1_GPIO_Port, STEP_IN1_Pin},
+    {STEP_IN2_GPIO_Port, STEP_IN2_Pin},
+    {STEP_IN3_GPIO_Port, STEP_IN3_Pin},
+    {STEP_IN4_GPIO_Port, STEP_IN4_Pin},
+    {LD1_GPIO_Port, LD1_Pin},
+    {LD2_GPIO_Port, LD2_Pin},
+    {LD3_GPIO_Port, LD3_Pin},
+    {USER_Btn_GPIO_Port, USER_Btn_Pin},
+};

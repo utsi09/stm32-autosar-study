@@ -17,16 +17,23 @@
  *      Dio_FlipChannel
  *      (선택) Dio_ReadPort, Dio_WritePort
  */
+  
 #ifndef DIO_H
 #define DIO_H
 
 #include "Std_Types.h"
 #include "Dio_Cfg.h"
+#include "main.h"
 
 typedef uint8 Dio_ChannelType;
 typedef uint8 Dio_LevelType;
 typedef uint8 Dio_PortType;
 typedef uint16 Dio_PortLevelType; //stm보드 포트 1개 > 핀 16개
+
+typedef struct {
+    GPIO_TypeDef * Port;
+    uint16 Pin;
+} Dio_ChannelConfigType;
 
 #define DIO_MODULE_ID 120
 #define DIO_READ_CHANNEL_SID 0x00
@@ -36,5 +43,6 @@ typedef uint16 Dio_PortLevelType; //stm보드 포트 1개 > 핀 16개
 Dio_LevelType Dio_ReadChannel(Dio_ChannelType);
 void Dio_WriteChannel(Dio_ChannelType, Dio_LevelType);
 Dio_LevelType Dio_FlipChannel(Dio_ChannelType);
+
 
 #endif /* DIO_H */
