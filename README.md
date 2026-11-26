@@ -1,7 +1,7 @@
 # stm32-autosar-study
 
-NUCLEO-F746ZG 보드에 AUTOSAR Classic 구조 흉내내서 BSW(MCAL), CDD 직접 짜보는 공부용 레포.
-HAL 위에 Dio 올리고 그 위에 스텝모터 CDD 올림.
+NUCLEO-F746ZG 보드에 AUTOSAR Classic 구조 흉내내서 BSW(MCAL), CDD 직접 짜보는 공부용 레포
+HAL 위에 Dio 올리고 그 위에 스텝모터 CDD 올림
 
 ```
 main.c -> Cdd_Stepper -> Dio(MCAL) -> HAL -> 핀 -> ULN2003 -> 28BYJ-48
@@ -12,7 +12,6 @@ main.c -> Cdd_Stepper -> Dio(MCAL) -> HAL -> 핀 -> ULN2003 -> 28BYJ-48
 - `Bsw/Common` : Platform_Types.h, Std_Types.h
 - `Bsw/Mcal/Dio` : Dio 드라이버 (Cfg / Lcfg 분리)
 - `Bsw/Cdd/Cdd_Stepper` : 스텝모터 CDD
-- `Core`, `Drivers` : CubeMX가 만든거 (내가 짠거 아님)
 
 ## 한 것
 
@@ -28,7 +27,7 @@ main.c -> Cdd_Stepper -> Dio(MCAL) -> HAL -> 핀 -> ULN2003 -> 28BYJ-48
 - Dio_Cfg.h : 채널 이름이랑 번호 정의
 - Dio.h : 타입, 서비스 ID, 함수 원형. 사양서 Syntax 칸 보고 옮겨적음
 - Dio_Lcfg.c : 채널 번호 -> 포트/핀 변환표 (구조체 배열)
-- 집에서도 하려고 깃허브에 올림
+- 집에서도 하려고 깃허브에 푸쉬
 
 ### 11/26
 - Dio.c : ReadChannel / WriteChannel / FlipChannel 구현
@@ -37,7 +36,7 @@ main.c -> Cdd_Stepper -> Dio(MCAL) -> HAL -> 핀 -> ULN2003 -> 28BYJ-48
 - main에서 HAL_GetTick으로 2ms마다 MainFunction 호출
 - 모터 돌아감
 
-## 삽질한 것
+## 실수 모음
 
 - C인데 C++ 문법 계속 씀 (pair, 참조 &, .first)
 - CMakeLists에 Dio.c 안넣어서 undefined reference
