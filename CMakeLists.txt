@@ -45,14 +45,20 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 # Add sources to executable
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
+    Bsw/Mcal/Dio/Dio.c
+    Bsw/Mcal/Dio/Dio_Lcfg.c
+    Bsw/Cdd/Cdd_Stepper/Cdd_Stepper.c
 )
 
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
+    Bsw/Common 
+    Bsw/Mcal/Dio
+    Bsw/Cdd/Cdd_Stepper
 )
 
-# Add project symbols (macros)
+# Add project symbols (macros) 
 target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined symbols
 )

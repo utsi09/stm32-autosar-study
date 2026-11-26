@@ -12,5 +12,10 @@
 #ifndef CDD_STEPPER_CFG_H
 #define CDD_STEPPER_CFG_H
 
+#include "Dio.h"
+
+#define CYCLE_MS 100
+#define ONE_CYCLE_PER_STEP 2048
+
 
 #endif /* CDD_STEPPER_CFG_H */

@@ -18,11 +18,13 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "stm32f7xx_hal.h"
 #include "string.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "Dio.h"
+#include "Cdd_Stepper.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -126,7 +128,11 @@ int main(void)
   MX_USART3_UART_Init();
   MX_USB_OTG_FS_PCD_Init();
   /* USER CODE BEGIN 2 */
-
+  uint32 StepperlastTick = 0;
+  uint32 LcdlastTick = 0;
+  Cdd_Stepper_Init();
+  
+  
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -134,20 +140,20 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+    Cdd_Stepper_Move(2048, CDD_STEPPER_CW); //무한으로 돌기
     /* USER CODE BEGIN 3 */
-    HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin); /* green */
-    HAL_Delay(200);
-    HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin); /* green */
-    HAL_Delay(200);
-    HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin); /* blue */
-    HAL_Delay(200);
-    HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin); /* blue */
-    HAL_Delay(200);
-    HAL_GPIO_TogglePin(LD3_GPIO_Port, LD3_Pin); /* red */
-    HAL_Delay(200);
-    HAL_GPIO_TogglePin(LD3_GPIO_Port, LD3_Pin); /* red */
-    HAL_Delay(200);
+    if(HAL_GetTick() - LcdlastTick >= 500){
+      LcdlastTick = HAL_GetTick();
+      Dio_FlipChannel(DioConf_DioChannel_LED_GREEN);
+    }
+    
+
+    if(HAL_GetTick() - StepperlastTick >= 2){
+      StepperlastTick = HAL_GetTick();
+      Cdd_Stepper_MainFunction();
+    }
+    
+
   }
   /* USER CODE END 3 */
 }

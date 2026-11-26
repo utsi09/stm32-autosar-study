@@ -3,18 +3,37 @@
  *
  * 역할: DIO 드라이버 구현. 하드웨어를 직접 만지는 유일한 곳.
  *       설정 테이블(Dio_Lcfg.c)을 보고 동작하며, 특정 핀 번호를 코드에 직접 쓰지 않는다.
- *
- * TODO
- *  - Dio.h, Det.h, STM32 헤더 include
- *  - Dio_Lcfg.c의 설정 테이블을 extern 으로 참조
- *  - Dio_ReadChannel  : 채널의 현재 레벨을 STD_HIGH / STD_LOW 로 반환
- *  - Dio_WriteChannel : 채널에 레벨 출력
- *  - Dio_FlipChannel  : 레벨을 뒤집고, 뒤집은 뒤의 레벨을 반환
- *  - DIO_DEV_ERROR_DETECT == STD_ON 일 때 잘못된 채널 ID면 Det_ReportError 호출
- *
- * 하드웨어 접근은 HAL(HAL_GPIO_ReadPin 등) 또는 레지스터(GPIOx->IDR, ODR, BSRR) 중 선택.
  */
 
+#include "Dio.h"
 
+extern const Dio_ChannelConfigType Dio_ChannelConfig[DIO_CHANNEL_COUNT];
 
- 
+Dio_LevelType Dio_ReadChannel(Dio_ChannelType ct){
+    if(ct >= DIO_CHANNEL_COUNT) return STD_LOW;
+    GPIO_TypeDef* GPIOx = Dio_ChannelConfig[ct].Port;
+    uint16_t GPIO_Pin = Dio_ChannelConfig[ct].Pin;
+    GPIO_PinState output = HAL_GPIO_ReadPin(GPIOx, GPIO_Pin);
+    if(output == GPIO_PIN_SET) return STD_HIGH;
+    else return STD_LOW;
+}
+
+void Dio_WriteChannel(Dio_ChannelType ct, Dio_LevelType lt){
+    if(ct >= DIO_CHANNEL_COUNT) return;
+    GPIO_TypeDef* GPIOx = Dio_ChannelConfig[ct].Port;
+    uint16_t GPIO_Pin = Dio_ChannelConfig[ct].Pin;
+    GPIO_PinState output;
+    if(lt == STD_HIGH) output = GPIO_PIN_SET;
+    else output = GPIO_PIN_RESET;
+    HAL_GPIO_WritePin(GPIOx, GPIO_Pin, output);
+}
+
+Dio_LevelType Dio_FlipChannel(Dio_ChannelType ct){
+    if(ct >= DIO_CHANNEL_COUNT) return STD_LOW;
+    GPIO_TypeDef* GPIOx = Dio_ChannelConfig[ct].Port;
+    uint16_t GPIO_Pin = Dio_ChannelConfig[ct].Pin;
+    HAL_GPIO_TogglePin(GPIOx, GPIO_Pin);
+    GPIO_PinState output = HAL_GPIO_ReadPin(GPIOx, GPIO_Pin);
+    if(output == GPIO_PIN_SET) return STD_HIGH;
+    else return STD_LOW;
+}
