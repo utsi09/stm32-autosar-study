@@ -40,8 +40,6 @@ main.c -> Cdd_Stepper -> Dio(MCAL) -> HAL -> 핀 -> ULN2003 -> 28BYJ-48
 ## 삽질한 것
 
 - C인데 C++ 문법 계속 씀 (pair, 참조 &, .first)
-- typedef 순서 헷갈림. `typedef 기존타입 새이름;`
-- #define 이름을 함수 이름이랑 똑같이 지어서 터짐
 - CMakeLists에 Dio.c 안넣어서 undefined reference
 - uint32가 0에서 1 빼면 42억 됨. MainFunction 맨 앞에 0 체크 필수
 - 인덱스 뒤로 돌릴때 `(i - 1) % 4` 하면 음수 나옴. `(i + 3) % 4`로 해야됨
